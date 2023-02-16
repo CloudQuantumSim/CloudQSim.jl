@@ -130,7 +130,7 @@ function submit_task(cloud_config::CloudConfig, task::CloudQSimTask)
         # If all workers fail, throw an error.
         sock = nothing
         addr, port = cloud_config.addrs[i], cloud_config.ports[i]
-        sock = connect(addr, port)
+        sock = Sockets.connect(addr, port)
         # --
         # Parsing may fail. This will not be handled
         ret, meta = fetch(submit_task_cloud(sock, task))
@@ -168,9 +168,9 @@ end
 function cloud_simulate(
         hamiltonian::AbstractVector,
         time_points :: Int64,
-        subspace_radius,
-        observables::Vector{<:AbstractArray{<:Number}},
+        observables::Vector{<:Vector},
         cloud_config::CloudConfig
+        ; subspace_radius=0.
     )
     t_to_schema = @elapsed begin
         bloqade_tasks = [BloqadeSchema.to_schema(h, n_shots=1)
@@ -192,8 +192,8 @@ end
 function cloud_simulate(
         hamiltonian::AbstractVector,
         time_points :: Int64,
-        subspace_radius,
-        observables::Vector{Vector{Any}}
+        observables::Vector{<:AbstractArray}
+        ; subspace_radius=0.,
     )
     t_to_schema = @elapsed begin
         bloqade_tasks = [BloqadeSchema.to_schema(h, n_shots=1)
@@ -209,14 +209,21 @@ function cloud_simulate(
     end
 end
 
-function cloud_simulate(
-        hamiltonian,
-        time_points :: Int64,
-        observables::Vector{Vector{Any}}
-    )
-    return cloud_simulate([hamiltonian], time_points, observables)
+# -- Single-hamiltonian versions
+function cloud_simulate(hamiltonian, rest...; kwargs...)
+    cloud_simulate([hamiltonian], rest...; kwargs...)
 end
+# --
 
+function cloud_simulate(
+        hamiltonian::AbstractVector,
+        time_points :: Int64,
+        subspace_radius,
+        observables::Vector{<:AbstractArray},
+        clconf:: CloudConfig
+    )
+    cloud_simulate(hamiltonian, time_points, observables, clconf; subspace_radius=subspace_radius)
+end
 
 function test_client()
     include("../tests/run_sim.jl")
