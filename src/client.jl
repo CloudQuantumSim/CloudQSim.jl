@@ -99,7 +99,6 @@ function get_working_servers(clconf, show_errors=false)
         try
             sock = Sockets.connect(clconf.addrs[i], clconf.ports[i])
             data, meta = fetch(send_task_cloud(sock, empty_task))
-            println("Empty data", data)
             Sockets.close(sock)
             push!(working_server_ids, i)
             push!(metas, meta)
