@@ -1,4 +1,5 @@
 import Sockets
+import Logging
 import JSON
 import BloqadeSchema
 import TOML
@@ -89,24 +90,27 @@ function send_task_cloud(sock, task)
     end
 end
 
-function get_working_servers(clconf, raise_errors=false)
+function get_working_servers(clconf, show_errors=false)
     println("[CQS] #> Testing servers...")
     empty_task = get_empty_task()
     working_server_ids = []
+    metas = []
     for i in 1:length(clconf.addrs)
         try
             sock = Sockets.connect(clconf.addrs[i], clconf.ports[i])
-            _, _ = fetch(send_task_cloud(sock, empty_task))
+            data, meta = fetch(send_task_cloud(sock, empty_task))
+            println("Empty data", data)
             Sockets.close(sock)
             push!(working_server_ids, i)
+            push!(metas, meta)
         catch e
-            if raise_errors
-                throw(e)
+            if show_errors
+                Logging.@error e
             end
             continue
         end
     end
-    return working_server_ids
+    return working_server_ids, metas
 end
 
 """
@@ -169,6 +173,14 @@ function convert_final_result(ret_list)
     return ret
 end
 
+# -- Manage meta about the simulation
+global last_meta = Dict()
+function get_last_meta()
+    return last_meta
+end
+function set_last_meta(meta)
+    global last_meta = meta
+end
 # -- Public API
 
 function cloud_simulate(
@@ -189,7 +201,7 @@ function cloud_simulate(
             if length(cloud_config) ≤ 1
                 working_server_ids = fill(1, length(cloud_config))
             else
-                working_server_ids = get_working_servers(cloud_config)
+                working_server_ids, _ = get_working_servers(cloud_config)
                 println("[CQS] <# Working servers Ids: ", working_server_ids)
             end
             if length(working_server_ids) == 0
@@ -199,8 +211,9 @@ function cloud_simulate(
             results, meta = distribute_task(task, working_clconf)
         end
         meta = reduce_meta(meta, Dict("to_schema" => t_to_schema, "submit" => t_submit))
+        set_last_meta(meta)
         ret = convert_final_result(results)
-        return ret, meta
+        return ret
     end
 end
 
