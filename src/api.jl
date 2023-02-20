@@ -33,14 +33,15 @@ end
 ## - Serialize task
 
 function serialize_task(task:: CloudQSimTask)
-    return JSON.json(auth_encode(Dict(
+    data = Dict(
         "version" => API_VERSION,
         "bloqade_tasks" =>
         [ Configurations.to_dict(t) for t in task.bloqade_tasks],
         "time_points" => task.time_points,
         "subspace_radius" => task.subspace_radius,
         "observables" => task.observs
-       )))
+       )
+    return data |> JSON.json
 end
 
 function serialize_hamiltonian(ham)
@@ -55,9 +56,7 @@ flatten(x) = x
 flatten(x::AbstractArray) = vcat(map(flatten, x)...)
 
 function parse_results(data)
-    #println("data", data)
-
-    sar = JSON.parse(data)
+    sar = data |> JSON.parse
     if length(sar) == 0
         println("No results")
         return []
