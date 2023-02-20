@@ -15,4 +15,4 @@ isodd = [x%2 for x in qstates]
 rydberg = [Base.count_ones(x) for x in qstates]
 observables = [isodd, rydberg]
 time_points = 10
-data, meta = fetch(CloudQS.cloud_simulate(h, time_points, observables, clconf))
+data, meta = CloudQS.cloud_simulate(h, time_points, observables, clconf)

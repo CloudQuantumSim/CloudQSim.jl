@@ -194,26 +194,24 @@ function cloud_simulate(
             for h in hamiltonian]
         task = CloudQSimTask(bloqade_tasks, time_points, subspace_radius, observables)
     end
-    @async begin
-        t_submit = @elapsed begin
-            # Don't check for working servers if there is no choice of servers
-            if length(cloud_config) ≤ 1
-                working_server_ids = fill(1, length(cloud_config))
-            else
-                working_server_ids, _ = get_working_servers(cloud_config)
-                println("[CQS] <# Working servers Ids: ", working_server_ids)
-            end
-            if length(working_server_ids) == 0
-                error("No working servers found")
-            end
-            working_clconf = cloud_config[working_server_ids]
-            results, meta = distribute_task(task, working_clconf)
+    t_submit = @elapsed begin
+        # Don't check for working servers if there is no choice of servers
+        if length(cloud_config) ≤ 1
+            working_server_ids = fill(1, length(cloud_config))
+        else
+            working_server_ids, _ = get_working_servers(cloud_config)
+            println("[CQS] <# Working servers Ids: ", working_server_ids)
         end
-        meta = reduce_meta(meta, Dict("to_schema" => t_to_schema, "submit" => t_submit))
-        set_last_meta(meta)
-        ret = convert_final_result(results)
-        return ret
+        if length(working_server_ids) == 0
+            error("No working servers found")
+        end
+        working_clconf = cloud_config[working_server_ids]
+        results, meta = distribute_task(task, working_clconf)
     end
+    meta = reduce_meta(meta, Dict("to_schema" => t_to_schema, "submit" => t_submit))
+    set_last_meta(meta)
+    ret = convert_final_result(results)
+    return ret
 end
 
 function cloud_simulate(
