@@ -2,7 +2,7 @@
 
 julia_version = "1.8.1"
 manifest_format = "2.0"
-project_hash = "22013ed7f50614b8d838c0490399033e363170a0"
+project_hash = "53a5b176915bbe7385ea20a2d4048b0d0919534d"
 
 [[deps.Adapt]]
 deps = ["LinearAlgebra"]
@@ -484,6 +484,12 @@ version = "0.6.3"
 deps = ["Artifacts", "LibSSH2_jll", "Libdl", "MbedTLS_jll", "Zlib_jll", "nghttp2_jll"]
 uuid = "deac9b47-8bc7-5906-a0fe-35ac56dc84c0"
 version = "7.84.0+0"
+
+[[deps.LibDeflate]]
+deps = ["libdeflate_jll"]
+git-tree-sha1 = "4eec2ec0493906e321dc5e246820045d72539f98"
+uuid = "9255714d-24a7-4b30-8ea3-d46a97f7e13b"
+version = "0.4.1"
 
 [[deps.LibGit2]]
 deps = ["Base64", "NetworkOptions", "Printf", "SHA"]
@@ -1048,6 +1054,12 @@ version = "0.15.1+0"
 deps = ["Artifacts", "Libdl", "OpenBLAS_jll"]
 uuid = "8e850b90-86db-534c-a0d3-1478176c7d93"
 version = "5.1.1+0"
+
+[[deps.libdeflate_jll]]
+deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
+git-tree-sha1 = "0d17dd704e500cd69222fb8bd8ba63513eeaeb44"
+uuid = "46979653-d7f6-5232-b59e-dd310c4598de"
+version = "1.13.0+0"
 
 [[deps.libfdk_aac_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]

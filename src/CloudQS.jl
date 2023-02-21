@@ -1,5 +1,6 @@
 module CloudQS
 
+    include("compress.jl")
     include("auth.jl")
     include("api.jl")
     include("client.jl")

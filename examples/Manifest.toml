@@ -116,7 +116,7 @@ uuid = "9e997f8a-9a97-42d5-a9f1-ce6bfc15e2c0"
 version = "0.1.5"
 
 [[deps.CloudQS]]
-deps = ["BloqadeExpr", "BloqadeLattices", "BloqadeSchema", "BloqadeWaveforms", "Configurations", "JSON", "JSONWebTokens", "Logging", "Sockets", "TOML"]
+deps = ["BloqadeExpr", "BloqadeLattices", "BloqadeSchema", "BloqadeWaveforms", "Configurations", "JSON", "JSONWebTokens", "LibDeflate", "Logging", "Sockets", "TOML"]
 path = ".."
 uuid = "34988d42-681d-408e-a0cb-937bf082e1fe"
 version = "0.1.0"
@@ -496,6 +496,12 @@ version = "0.6.3"
 deps = ["Artifacts", "LibSSH2_jll", "Libdl", "MbedTLS_jll", "Zlib_jll", "nghttp2_jll"]
 uuid = "deac9b47-8bc7-5906-a0fe-35ac56dc84c0"
 version = "7.84.0+0"
+
+[[deps.LibDeflate]]
+deps = ["libdeflate_jll"]
+git-tree-sha1 = "4eec2ec0493906e321dc5e246820045d72539f98"
+uuid = "9255714d-24a7-4b30-8ea3-d46a97f7e13b"
+version = "0.4.1"
 
 [[deps.LibGit2]]
 deps = ["Base64", "NetworkOptions", "Printf", "SHA"]
@@ -1060,6 +1066,12 @@ version = "0.15.1+0"
 deps = ["Artifacts", "Libdl", "OpenBLAS_jll"]
 uuid = "8e850b90-86db-534c-a0d3-1478176c7d93"
 version = "5.1.1+0"
+
+[[deps.libdeflate_jll]]
+deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
+git-tree-sha1 = "0d17dd704e500cd69222fb8bd8ba63513eeaeb44"
+uuid = "46979653-d7f6-5232-b59e-dd310c4598de"
+version = "1.13.0+0"
 
 [[deps.libfdk_aac_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]

@@ -164,11 +164,10 @@ function convert_final_result(ret_list)
     l1 = length(ret_list)
     l2 = length(ret_list[1])
     l3 = length(ret_list[1][1])
-    l4 = length(ret_list[1][1][1])
-    dims = (l1, l2, l3, l4)
+    dims = (l1, l2, l3)
     mat = flatten(ret_list)
     mat = reshape(mat, reverse(dims))
-    ret = permutedims(mat, (4, 3, 2, 1))
+    ret = permutedims(mat, (3, 2, 1))
     return ret
 end
 
@@ -229,7 +228,7 @@ end
 
 # -- Single-hamiltonian versions
 function cloud_simulate(hamiltonian, rest...; kwargs...)
-    cloud_simulate([hamiltonian], rest...; kwargs...)
+    cloud_simulate([hamiltonian], rest...; kwargs...)[1, :, :]
 end
 # --
 
