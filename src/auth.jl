@@ -1,8 +1,8 @@
 using JSONWebTokens
 import JSON
 
-VERSION::String = "0.1.1"
-TOKEN_ENV_VAR::String = "CLOUDQS_TOKEN"
+VERSION = "0.1.1"
+TOKEN_ENV_VAR = "CLOUDQS_TOKEN"
 
 function _get_token(token::Union{String, Nothing})::Union{String, Nothing}
     if token === nothing
