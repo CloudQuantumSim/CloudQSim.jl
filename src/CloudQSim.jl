@@ -1,4 +1,4 @@
-module CloudQS
+module CloudQSim
 
     include("compress.jl")
     include("auth.jl")

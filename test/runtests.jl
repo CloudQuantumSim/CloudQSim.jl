@@ -1,5 +1,5 @@
 using Test
-import CloudQS
+import CloudQSim
 
 @testset "unit" begin
     include("unit.jl")

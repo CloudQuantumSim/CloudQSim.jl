@@ -115,7 +115,7 @@ git-tree-sha1 = "844b061c104c408b24537482469400af6075aae4"
 uuid = "9e997f8a-9a97-42d5-a9f1-ce6bfc15e2c0"
 version = "0.1.5"
 
-[[deps.CloudQS]]
+[[deps.CloudQSim]]
 deps = ["BloqadeExpr", "BloqadeLattices", "BloqadeSchema", "BloqadeWaveforms", "Configurations", "JSON", "JSONWebTokens", "LibDeflate", "Logging", "Sockets", "TOML"]
 path = ".."
 uuid = "34988d42-681d-408e-a0cb-937bf082e1fe"

@@ -1,9 +1,9 @@
 using BloqadeExpr, BloqadeLattices, BloqadeWaveforms
-import CloudQS 
+import CloudQSim 
 HOSTNAME = "cloudqs.lykov.tech"
 PORT = 7700
-remote_config = CloudQS.CloudConfig()
-CloudQS.add_server!(remote_config, HOSTNAME, PORT)
+remote_config = CloudQSim.CloudConfig()
+CloudQSim.add_server!(remote_config, HOSTNAME, PORT)
 
 @testset "Send to server" begin
     nsites = 10
@@ -18,11 +18,11 @@ CloudQS.add_server!(remote_config, HOSTNAME, PORT)
     rydberg = [Base.count_ones(x) for x in qstates]
     observables = [isodd, rydberg]
     time_points = 10
-    data = CloudQS.cloud_simulate([h], time_points, observables, remote_config)
+    data = CloudQSim.cloud_simulate([h], time_points, observables, remote_config)
     @test size(data) == (1, 10, 2)
-    data = CloudQS.cloud_simulate(h, time_points, observables, remote_config)
+    data = CloudQSim.cloud_simulate(h, time_points, observables, remote_config)
     @test size(data) == (10, 2)
 
-    data = CloudQS.cloud_simulate(fill(h, 3), time_points, observables, remote_config)
+    data = CloudQSim.cloud_simulate(fill(h, 3), time_points, observables, remote_config)
     @test size(data) == (3, 10, 2)
 end
