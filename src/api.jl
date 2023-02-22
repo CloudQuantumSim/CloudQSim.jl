@@ -2,6 +2,9 @@ import Configurations
 import JSON
 import BloqadeSchema
 
+"""
+Simple wrapper for cloud server task
+"""
 @Base.kwdef struct CloudQSimTask
     bloqade_tasks :: Vector{BloqadeSchema.TaskSpecification}
     time_points :: Int64

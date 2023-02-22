@@ -1,3 +1,7 @@
+"""
+Cloud simulation of quantum evolution using Bloqade.jl
+
+"""
 module CloudQSim
 
     include("compress.jl")

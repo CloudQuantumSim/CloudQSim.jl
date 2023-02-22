@@ -13,6 +13,20 @@ API_VERSION = 1
 # CloudConfig is a configuration structure that holds the information about the
 # cloud servers. Can be read from a TOML file. 
 
+"""
+Configuration for cloud simulation servers.
+
+# Fields
+- `addrs`: Hosts to connect to
+- `ports`: Ports to use 
+- `worker_counts`: Number of workers on each server to use in load balancing
+
+# Example
+```julia-repl
+julia> clconf = CloudConfig()
+julia> add_server!(clconf, "cloudqs.lykov.tech", 7700)
+```
+"""
 struct CloudConfig
     addrs :: Vector{String}
     ports :: Vector{Int}
@@ -113,7 +127,8 @@ function get_working_servers(clconf, show_errors=false)
 end
 
 """
-Load balancing of jobs betwen worker servers
+Split one [`CloudQSimTask`](@ref) into many for balancing of jobs betwen worker
+    servers
 """
 function split_task(task::CloudQSimTask, portions::Vector{Int})
     total_workers = sum(portions)
@@ -173,6 +188,10 @@ end
 
 # -- Manage meta about the simulation
 global last_meta = Dict()
+"""
+Get metadata about the last simulation,
+such as time spent in network, parsing results, etc.
+"""
 function get_last_meta()
     return last_meta
 end
@@ -181,6 +200,21 @@ function set_last_meta(meta)
 end
 # -- Public API
 
+"""
+Run quantum evolution of multiple Hamiltonians in the cloud.
+
+# Arguments
+- `hamiltonian::Vector`: List of Hamiltonians
+- `time_points::Int`: How many evaluations of observables to do
+    throughout the simulation
+- `observables::Vector{<:Vector}`: List of observables to evaluate
+- `subspace_radius::Float64=0.`: Radius of the subspace to use for
+    the Bloqade subspace evolution
+
+# Returns
+- `results::Array`: Array of results, with dimensions
+    (hamiltonians, time_points, observables)
+"""
 function cloud_simulate(
         hamiltonian::AbstractVector,
         time_points :: Int64,

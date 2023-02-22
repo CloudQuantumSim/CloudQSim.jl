@@ -1,5 +1,8 @@
 [deps]
 BloqadeExpr = "bd27d05e-4ce1-5e79-84dd-c5d7d508abe2"
+BloqadeKrylov = "bd27d05e-4cd1-5e79-84dd-c5d7d508ade2"
 BloqadeLattices = "bd27d05e-4ce1-5e79-84dd-c5d7d508bbe4"
+BloqadeODE = "bd27d05e-4ce1-5e79-84dd-c5d7d508bbe5"
 BloqadeWaveforms = "bd27d05e-4ce1-5e79-84dd-c5d7d508bbe7"
 CloudQSim = "34988d42-681d-408e-a0cb-937bf082e1fe"
+Yao = "5872b779-8223-5990-8dd0-5abbb0748c8c"
