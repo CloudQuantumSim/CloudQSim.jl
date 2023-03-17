@@ -31,7 +31,8 @@ import CloudQSim
 nsites = 10
 atoms = generate_sites(ChainLattice(), nsites, scale = 5.74)
 T_end = 1.
-Δ = ϕ = piecewise_linear(; clocks = [0, T_end], values = [0., 0.])
+Δ = piecewise_linear(; clocks = [0, T_end], values = [0., 0.])
+ϕ = piecewise_constant(; clocks = [0, T_end], values = [0.])
 Ω = piecewise_linear(; clocks = [0, T_end], values = [2π, 2π])
 h = rydberg_h(atoms; Ω = Ω, Δ = Δ, ϕ = ϕ)
 

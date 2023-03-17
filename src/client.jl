@@ -1,7 +1,7 @@
 import Sockets
 import Logging
 import JSON
-import BloqadeSchema
+import BloqadeSchema, BloqadeExpr
 import TOML
 
 API_VERSION = 1
@@ -198,6 +198,17 @@ end
 function set_last_meta(meta)
     global last_meta = meta
 end
+
+function to_schema_no_validation(h::BloqadeExpr.RydbergHamiltonian)
+    atoms,ϕ,Ω,Δ,δ,Δi = BloqadeSchema.schema_parse_rydberg_fields(h)
+    if isnothing(δ)
+        # BloqadeSchema/execute.jl:541 doesn't use Δi, but outer API wants a vector.
+        Δi = nothing
+    end
+    params = BloqadeSchema.SchemaTranslationParams()
+    schema = BloqadeSchema.to_schema_no_validation(atoms,ϕ,Ω,Δ,δ,Δi,params)
+    return schema
+end
 # -- Public API
 
 """
@@ -223,7 +234,7 @@ function cloud_simulate(
         ; subspace_radius=0.
     )
     t_to_schema = @elapsed begin
-        bloqade_tasks = [BloqadeSchema.to_schema(h, n_shots=1)
+        bloqade_tasks = [to_schema_no_validation(h)
             for h in hamiltonian]
         task = CloudQSimTask(bloqade_tasks, time_points, subspace_radius, observables)
     end
