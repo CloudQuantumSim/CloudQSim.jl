@@ -4,7 +4,7 @@ import JSON
 import BloqadeSchema, BloqadeExpr
 import TOML
 
-API_VERSION = 1
+API_VERSION = 2
 
 # -- Cloud Managment
 # Given many servers, it is possible to distribute the tasks
